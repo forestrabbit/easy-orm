@@ -204,6 +204,6 @@ class Database(object):
 			ans.append(temp)
 		return ans
 
-	def update(self, sql):
+	def execute(self, sql):
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
