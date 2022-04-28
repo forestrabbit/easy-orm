@@ -204,6 +204,10 @@ class Database(object):
 			ans.append(temp)
 		return ans
 
+	def isTableExist(self, model):
+		self.cursor.execute('show tables like \'%' + model.__table__ + '%\'')
+		return len(self.cursor.fetchall()) != 0
+
 	def execute(self, sql):
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()

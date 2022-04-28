@@ -33,6 +33,7 @@ if __name__ == '__main__':
 	users.sort(key = lambda user: user['id'], reverse = True)
 	for i in users:
 		print(i)
-	database.drop(User())
 	database.commit()
+	print(database.isTableExist(User()))
+	database.drop(User())
 	database.close()
