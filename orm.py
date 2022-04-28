@@ -203,3 +203,7 @@ class Database(object):
 			temp.set(item)
 			ans.append(temp)
 		return ans
+
+	def update(self, sql):
+		self.cursor.execute(sql)
+		return self.cursor.fetchall()
