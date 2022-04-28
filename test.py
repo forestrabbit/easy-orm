@@ -29,11 +29,10 @@ if __name__ == '__main__':
 		User(id = 0, userName = 'aaa', password = 'aaa'),
 		User(id = 1, userName = 'bbb', password = 'bbb')
 	)
-	user1 = User(id = 0)
-	user2 = User(id = 1)
-	database.select(user1, user2)
-	database.drop(user1)
+	users = database.selectAll(User())
+	users.sort(key = lambda user: user['id'], reverse = True)
+	for i in users:
+		print(i)
+	database.drop(User())
 	database.commit()
 	database.close()
-	print(user1)
-	print(user2)
