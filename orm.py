@@ -7,7 +7,7 @@ class Field(object):
 		self._name = name
 		self._ctype = ctype
 		self._attrs = attrs
-	
+
 	@property
 	def name(self):
 		return self._name
@@ -69,7 +69,7 @@ class Model(dict, metaclass = ModelMetaclass):
 		ans += ')'
 		cursor.execute(ans)
 		return self
-	
+
 	def insert(self, cursor):
 		columns = []
 		values = []
@@ -83,7 +83,7 @@ class Model(dict, metaclass = ModelMetaclass):
 				values.append('\'' + self[k] + '\'')
 		cursor.execute('insert into %s (%s) values (%s)' %(self.__table__, ','.join(columns), ','.join(values)))
 		return self
-	
+
 	def select(self, cursor):
 		ans = 'select * from %s where ' %self.__table__
 		columns = []
@@ -101,7 +101,7 @@ class Model(dict, metaclass = ModelMetaclass):
 		for i in range(len(pstr)):
 			ans += pstr[i]
 			if i != len(pstr) - 1:
-				ans += 'and '
+				ans += ' and '
 		cursor.execute(ans)
 		values = cursor.fetchall()
 		for i in range(len(self.__mapping__.keys())):
@@ -127,7 +127,7 @@ class Model(dict, metaclass = ModelMetaclass):
 		for i in range(len(pstr)):
 			ans += pstr[i]
 			if i != len(pstr) - 1:
-				ans += 'and '
+				ans += ' and '
 		cursor.execute(ans)
 		return self
 
@@ -148,7 +148,8 @@ class Model(dict, metaclass = ModelMetaclass):
 		for i in range(len(pstr)):
 			ans += pstr[i]
 			if i != len(pstr) - 1:
-				ans += 'and '
+				ans += ' and '
+		print(ans)
 		cursor.execute(ans)
 		return self
 
@@ -156,18 +157,18 @@ class Database(object):
 	def __init__(self, conn):
 		self._conn = conn
 		self._cursor = self._conn.cursor()
-	
+
 	def commit(self):
 		self._conn.commit()
-	
+
 	def close(self):
 		self._cursor.close()
 		self._conn.close()
-	
+
 	@property
 	def cursor(self):
 		return self._cursor
-	
+
 	def insert(self, *models):
 		for model in models:
 			model.insert(self.cursor)
@@ -190,10 +191,10 @@ class Database(object):
 
 	def deleteAll(self, model):
 		self.cursor.execute('delete from ' + model.__table__)
-	
+
 	def drop(self, model):
 		self.cursor.execute('drop table ' + model.__table__)
-	
+
 	def selectAll(self, model):
 		self.cursor.execute('select * from ' + model.__table__)
 		values = self.cursor.fetchall()
