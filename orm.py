@@ -77,7 +77,7 @@ class Model(dict, metaclass = ModelMetaclass):
 			columns.append(v.name)
 			if 'primary key' in v.attrs and self[k] == '':
 				raise ValueError('primary key is empty')
-			if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype:
+			if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype or 'boolean' in v.ctype:
 				values.append(str(self[k]))
 			else:
 				values.append('\'' + self[k] + '\'')
@@ -94,7 +94,7 @@ class Model(dict, metaclass = ModelMetaclass):
 			if 'primary key' in v.attrs:
 				if self[k] == '':
 					raise ValueError('primary key is empty')
-				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype:
+				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype or 'boolean' in v.ctype:
 					pstr.append(v.name + ' = ' + str(self[k]))
 				else:
 					pstr.append(v.name + ' = \'' + self[k] + '\'')
@@ -116,12 +116,12 @@ class Model(dict, metaclass = ModelMetaclass):
 		pstr = []
 		for k, v in self.__mapping__.items():
 			if 'primary key' in v.attrs:
-				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype:
-					pstr.append(v.name + ' = ' + self[k])
+				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype or 'boolean' in v.ctype:
+					pstr.append(v.name + ' = ' + str(self[k]))
 				else:
 					pstr.append(v.name + ' = \'' + self[k] + '\'')
 			else:
-				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype:
+				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype or 'boolean' in v.ctype:
 					ans += '%s = %s, '%(v.name, str(self[k]))
 				else:
 					ans += '%s = \'%s\', '%(v.name, self[k])
@@ -144,7 +144,7 @@ class Model(dict, metaclass = ModelMetaclass):
 			if 'primary key' in v.attrs:
 				if self[k] == '':
 					raise ValueError('primary key is empty')
-				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype:
+				if 'int' in v.ctype or 'float' in v.ctype or 'double' in v.ctype or 'decimal' in v.ctype or 'boolean' in v.ctype:
 					pstr.append(v.name + ' = ' + str(self[k]))
 				else:
 					pstr.append(v.name + ' = \'' + self[k] + '\'')
