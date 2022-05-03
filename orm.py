@@ -105,7 +105,10 @@ class Model(dict, metaclass = ModelMetaclass):
 		cursor.execute(ans)
 		values = cursor.fetchall()
 		for i in range(len(self.__mapping__.keys())):
-			self[list(self.__mapping__.keys())[i]] = values[0][i]
+			if len(values) > 0:
+				self[list(self.__mapping__.keys())[i]] = values[0][i]
+			else:
+				self[list(self.__mapping__.keys())[i]] = ''
 		return self
 
 	def update(self, cursor):
